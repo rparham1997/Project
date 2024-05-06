@@ -8,17 +8,32 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    //MARK: - Property Wrappers
+    
+    @EnvironmentObject var webservice: Webservice
+    @State private var isPresented: Bool = false
+    
+    // MARK: - UI related code
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationView {
+            List(webservice.coffeeOrders) { order in
+                CoffeeOrderCellView(order: order)
+            }.task {
+                try? await webservice.populateCoffeeOrders()
+            }.toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Add Order") {
+                        isPresented = true
+                    }
+                }
+            }.sheet(isPresented: $isPresented) {
+                AddCoffeeOrderView()
+            }
         }
-        .padding()
     }
 }
 
 #Preview {
-    ContentView()
+    ContentView().environmentObject(Webservice())
 }

@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+struct SavedOrderResponse: Decodable {
+    let sucess: Bool
+}

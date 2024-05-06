@@ -10,27 +10,25 @@ import XCTest
 
 final class ProjectTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testCoffeeOrderInitialization() {
+            let order = CoffeeOrder(name: "John Doe", coffeeName: "Latte", total: 3.50, size: .medium)
+            
+            XCTAssertEqual(order.name, "John Doe")
+            XCTAssertEqual(order.coffeeName, "Latte")
+            XCTAssertEqual(order.total, 3.50)
+            XCTAssertEqual(order.size, .medium)
         }
-    }
+        
+        func testCoffeeOrderID() {
+            let order1 = CoffeeOrder(name: "Jane Smith", coffeeName: "Espresso", total: 2.00, size: .small)
+            let order2 = CoffeeOrder(name: "John Doe", coffeeName: "Latte", total: 3.50, size: .medium)
+            
+            XCTAssertNotEqual(order1.id, order2.id)
+        }
 
+        static var allTests = [
+            ("testCoffeeOrderInitialization", testCoffeeOrderInitialization),
+            ("testCoffeeOrderID", testCoffeeOrderID)
+        ]
+    
 }
